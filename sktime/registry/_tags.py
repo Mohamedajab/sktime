@@ -1330,10 +1330,15 @@ class requires_fh_in_fit(_BaseTag):
 
     If the tag is ``True``, the forecaster requires the forecasting horizon
     to be passed in the ``fit`` method, i.e., the ``fh`` argument must be non-``None``.
+    Prediction methods can then omit ``fh`` to reuse the horizon passed to ``fit``.
+    If a horizon is supplied again, it must match the fitted horizon; changing it
+    requires refitting the forecaster.
 
     If the tag is ``False``, the forecasting horizon can be passed in the ``fit``
-    method, but this is not required. In this case, it must be passed later,
-    whenever ``predict`` or other prediction methods are called.
+    method, but this is not required. If omitted in ``fit``, it must be passed
+    to the first prediction call. Later prediction calls can omit ``fh`` to reuse
+    the most recently supplied horizon, or pass a different horizon without
+    refitting.
 
     Whether the ``fh`` is required in ``fit`` is an intrinsic property of the
     forecasting algorithm and not a user setting.
